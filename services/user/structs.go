@@ -18,18 +18,18 @@ func (r AuthenticationUserReq) Validation() error {
 	var errs error
 
 	if r.Email == "" {
-		errs = errors.Join(errs, errors.New("Email is required"))
+		errs = errors.Join(errs, errors.New("Email ga bole kosong"))
 	} else {
 		if !govalidator.IsEmail(r.Email) {
-			errs = errors.Join(errs, errors.New("Invalid email"))
+			errs = errors.Join(errs, errors.New("Ini sih bukan email"))
 		}
 	}
 
 	if r.Password == "" {
-		errs = errors.Join(errs, errors.New("Password is required"))
+		errs = errors.Join(errs, errors.New("Password ga bole kosong"))
 	} else {
 		if len(r.Password) < 8 || len(r.Password) > 32 {
-			errs = errors.Join(errs, errors.New("Password must be between 8 and 32 characters"))
+			errs = errors.Join(errs, errors.New("Passwordnya 8-32 karakter bwang"))
 		}
 	}
 

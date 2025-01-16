@@ -21,20 +21,17 @@ func (svc *userServiceImpl) GetSessionFromToken(ctx context.Context, req GetSess
 		},
 	)
 
-	if err != nil {
-		switch {
+	switch {
+	case errors.Is(err, jwt.ErrTokenMalformed) ||
+		errors.Is(err, jwt.ErrTokenSignatureInvalid):
+		return ErrTokenInvalid
 
-		case errors.Is(err, jwt.ErrTokenMalformed) ||
-			errors.Is(err, jwt.ErrTokenSignatureInvalid):
-			return ErrTokenInvalid
+	case errors.Is(err, jwt.ErrTokenExpired) ||
+		errors.Is(err, jwt.ErrTokenNotValidYet):
+		return ErrTokenExpired
 
-		case errors.Is(err, jwt.ErrTokenExpired) ||
-			errors.Is(err, jwt.ErrTokenNotValidYet):
-			return ErrTokenExpired
-
-		default:
-			return errorutil.AddCurrentContext(err)
-		}
+	case err != nil:
+		return errorutil.AddCurrentContext(err)
 	}
 
 	*res = GetSessionFromTokenRes{

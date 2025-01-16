@@ -11,3 +11,5 @@ CREATE TABLE users
     height      INTEGER,
     image_uri   TEXT
 );
+
+CREATE INDEX IF NOT EXISTS users_email_hash_idx ON users USING HASH (email);

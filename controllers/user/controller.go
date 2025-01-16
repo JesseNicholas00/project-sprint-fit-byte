@@ -21,7 +21,7 @@ func NewUserController(service user.UserService, authMw middlewares.Middleware) 
 
 func (ctrl *userController) Register(server *echo.Echo) error {
 	server.POST("/v1/register", ctrl.registerUser)
-	server.POST("/v1/login", ctrl.registerUser)
+	server.POST("/v1/login", ctrl.loginUser)
 
 	return nil
 }

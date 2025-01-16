@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func (ctrl *userController) registerUser(c echo.Context) error {
+func (ctrl *userController) loginUser(c echo.Context) error {
 	req := user.AuthenticationUserReq{}
 	if err := request.BindAndValidate(c, &req); err != nil {
 		return err
@@ -17,15 +17,15 @@ func (ctrl *userController) registerUser(c echo.Context) error {
 
 	res := user.AuthenticationUserRes{}
 
-	err := ctrl.service.RegisterUser(c.Request().Context(), req, &res)
+	err := ctrl.service.LoginUser(c.Request().Context(), req, &res)
 	switch {
-	case errors.Is(err, user.ErrEmailAlreadyRegistered):
-		return c.JSON(http.StatusConflict, echo.Map{
-			"message": "login aja kan udah daftar tadi",
+	case errors.Is(err, user.ErrUserNotFound):
+		return c.JSON(http.StatusNotFound, echo.Map{
+			"message": "kamu siapa?",
 		})
 	case err != nil:
 		return errorutil.AddCurrentContext(err)
 	}
 
-	return c.JSON(http.StatusCreated, res)
+	return c.JSON(http.StatusOK, res)
 }
