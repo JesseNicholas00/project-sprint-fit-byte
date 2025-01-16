@@ -1,4 +1,8 @@
 package user
 
+import "context"
+
 type UserRepository interface {
+	CreateUser(ctx context.Context, user User) error
+	FindUserByEmail(ctx context.Context, email string) (User, error)
 }

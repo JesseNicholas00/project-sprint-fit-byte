@@ -34,6 +34,7 @@ type ServerConfig struct {
 	slowThreshold      time.Duration
 
 	showErrorContent bool
+	experimental     bool
 }
 
 func loadConfig() (cfg ServerConfig, err error) {
@@ -96,6 +97,9 @@ func loadConfig() (cfg ServerConfig, err error) {
 	) * time.Millisecond
 
 	cfg.showErrorContent = conf.GetBool("SHOW_ERROR_CONTENT")
+
+	conf.SetDefault("EXPERIMENTAL", false)
+	cfg.experimental = conf.GetBool("EXPERIMENTAL")
 
 	return
 }

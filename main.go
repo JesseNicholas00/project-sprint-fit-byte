@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/JesseNicholas00/FitByte/utils/request"
 
 	"github.com/JesseNicholas00/FitByte/middlewares"
 	"github.com/JesseNicholas00/FitByte/utils/statementutil"
@@ -87,6 +88,10 @@ func main() {
 	controllers := initControllers(cfg, db, uploader)
 
 	server := echo.New()
+
+	if cfg.experimental {
+		server.JSONSerializer = &request.SonicSerializer{}
+	}
 
 	if cfg.traceSlowEndpoints {
 		slowLogger := middlewares.NewSlowTracerMiddleware(cfg.slowThreshold)
