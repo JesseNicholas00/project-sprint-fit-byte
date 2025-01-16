@@ -41,6 +41,14 @@ type AuthenticationUserRes struct {
 	Token string `json:"token"`
 }
 
+type GetSessionFromTokenReq struct {
+	Token string
+}
+
+type GetSessionFromTokenRes struct {
+	UserID uuid.UUID
+}
+
 type jwtClaims struct {
 	jwt.RegisteredClaims
 	Data jwtSubClaims `json:"data"`

@@ -27,10 +27,10 @@ func initControllers(
 	}()
 
 	dbRizzer := ctxrizz.NewDbContextRizzer(db)
-	authMw := middlewares.NewAuthMiddleware()
 
 	userRepository := userRepo.NewUserRepository(dbRizzer)
 	userService := userScv.NewUserService(userRepository, dbRizzer, cfg.jwtSecretKey, cfg.bcryptSaltCost, cfg.experimental)
+	authMw := middlewares.NewAuthMiddleware(userService, cfg.experimental)
 	userController := userCtrl.NewUserController(userService, authMw)
 	ctrls = append(ctrls, userController)
 
