@@ -16,6 +16,7 @@ func (ctrl *activityController) Register(server *echo.Echo) error {
 	g := server.Group("/v1/activity", ctrl.authMw.Process) // Protected routes
 
 	g.POST("", ctrl.addActivity)
+	g.PATCH("/:activityId", ctrl.updateActivity)
 
 	return nil
 }
