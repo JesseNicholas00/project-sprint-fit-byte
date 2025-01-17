@@ -25,5 +25,5 @@ type AddActivityRes struct {
 type UpdateActivityReq struct {
 	ActivityType      optional.OptionalStr `json:"activityType" validate:"omitnil,oneof=Walking Yoga Stretching Cycling Swimming Dancing Hiking Running HIIT JumpRope"`
 	DoneAt            optional.OptionalStr `json:"doneAt" validate:"omitnil,iso8601"`
-	DurationInMinutes int                  `json:"durationInMinutes" validate:"omitnil,min=1"`
+	DurationInMinutes optional.OptionalInt `json:"durationInMinutes" validate:"omitnil,min=1"`
 }

@@ -30,25 +30,26 @@ func (svc *activityServiceImpl) UpdateActivity(ctx context.Context, req UpdateAc
 				return ErrActivityIdNotFound
 			default:
 				return errorutil.AddCurrentContext(err)
-
 			}
 		}
 
-		doneAt, err := helper.MustParse(*req.DoneAt.V)
-		if err != nil {
-			return errorutil.AddCurrentContext(err)
-		}
-
-		if req.ActivityType.V != nil {
-			activity.ActivityType = *req.ActivityType.V
-		}
-
-		if req.DoneAt.V != nil {
+		// Only process DoneAt if it's defined and has a value
+		if req.DoneAt.Defined && req.DoneAt.V != nil {
+			doneAt, err := helper.MustParse(*req.DoneAt.V)
+			if err != nil {
+				return errorutil.AddCurrentContext(err)
+			}
 			activity.DoneAt = doneAt
 		}
 
-		if req.DurationInMinutes != 0 {
-			activity.DurationInMinutes = req.DurationInMinutes
+		// Only update ActivityType if it's defined and has a value
+		if req.ActivityType.Defined && req.ActivityType.V != nil {
+			activity.ActivityType = *req.ActivityType.V
+		}
+
+		// Only update DurationInMinutes if it's defined and has a value
+		if req.DurationInMinutes.Defined && req.DurationInMinutes.V != nil {
+			activity.DurationInMinutes = int(*req.DurationInMinutes.V)
 		}
 
 		// Update calories burned based on activity type
