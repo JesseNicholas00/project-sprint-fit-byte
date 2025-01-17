@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/JesseNicholas00/FitByte/controllers"
 	activityCtrl "github.com/JesseNicholas00/FitByte/controllers/activity"
+	imageCtrl "github.com/JesseNicholas00/FitByte/controllers/image"
 	userCtrl "github.com/JesseNicholas00/FitByte/controllers/user"
 	"github.com/JesseNicholas00/FitByte/middlewares"
 	activityRepo "github.com/JesseNicholas00/FitByte/repos/activity"
@@ -42,6 +43,14 @@ func initControllers(
 	activityMw := middlewares.NewAuthMiddleware(userService, cfg.experimental)
 	activityController := activityCtrl.NewActivityController(activityService, activityMw)
 	ctrls = append(ctrls, activityController)
+
+	imageController := imageCtrl.NewImageController(
+		uploader,
+		cfg.awsS3BucketName,
+		cfg.awsRegion,
+		authMw,
+	)
+	ctrls = append(ctrls, imageController)
 
 	return
 }
