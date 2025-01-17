@@ -6,7 +6,7 @@ import (
 
 type AddActivityReq struct {
 	ActivityType      string    `json:"activityType" validate:"required,oneof=Walking Yoga Stretching Cycling Swimming Dancing Hiking Running HIIT JumpRope"`
-	DoneAt            string    `json:"doneAt" validate:"required,datetime=2006-01-02T15:04:05Z07:00"`
+	DoneAt            string    `json:"doneAt" validate:"required"`
 	DurationInMinutes int       `json:"durationInMinutes" validate:"required,min=1"`
 	UserID            uuid.UUID `json:"userId"`
 }

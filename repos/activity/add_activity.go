@@ -2,14 +2,12 @@ package activity
 
 import (
 	"context"
-	"log"
 
 	"github.com/JesseNicholas00/FitByte/utils/errorutil"
 	"github.com/google/uuid"
 )
 
 func (repo *activityRepositoryImpl) AddActivity(ctx context.Context, activity Activity, userId uuid.UUID) error {
-	log.Printf("repo AddActivity: %v", activity)
 	if err := ctx.Err(); err != nil {
 		return err
 	}

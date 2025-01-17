@@ -12,8 +12,8 @@ type statements struct {
 func prepareStatements() statements {
 	return statements{
 		add: statementutil.MustPrepareNamed(`
-			INSERT INTO activities (activity_id, activity_type, done_at, duration_in_minutes, calories_burned, created_at, updated_at)
-			VALUES (:activity_id, :activity_type, :done_at, :duration_in_minutes, :calories_burned, :created_at, :updated_at)
+			INSERT INTO activities (activity_id, user_id, activity_type, done_at, duration_in_minutes, calories_burned, created_at, updated_at)
+			VALUES (:activity_id, :user_id, :activity_type, :done_at, :duration_in_minutes, :calories_burned, :created_at, :updated_at)
 		`),
 	}
 }

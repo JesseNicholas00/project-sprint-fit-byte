@@ -12,7 +12,6 @@ import (
 )
 
 func (ctrl *activityController) addActivity(ctx echo.Context) error {
-	log.Println("ctrl addActivity")
 	req := activity.AddActivityReq{}
 	if err := request.BindAndValidate(ctx, &req); err != nil {
 		log.Printf("error binding and validating: %v", err)
