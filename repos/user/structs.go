@@ -7,7 +7,7 @@ import (
 
 type User struct {
 	ID         uuid.UUID        `db:"user_id"`
-	Name       sql.Null[string] `db:"user_name"`
+	Name       sql.Null[string] `db:"name"`
 	Email      string           `db:"email"`
 	Password   string           `db:"password"`
 	Preference sql.Null[string] `db:"preference"`
