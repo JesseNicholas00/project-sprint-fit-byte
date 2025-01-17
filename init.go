@@ -2,9 +2,12 @@ package main
 
 import (
 	"github.com/JesseNicholas00/FitByte/controllers"
+	activityCtrl "github.com/JesseNicholas00/FitByte/controllers/activity"
 	userCtrl "github.com/JesseNicholas00/FitByte/controllers/user"
 	"github.com/JesseNicholas00/FitByte/middlewares"
+	activityRepo "github.com/JesseNicholas00/FitByte/repos/activity"
 	userRepo "github.com/JesseNicholas00/FitByte/repos/user"
+	activitySvc "github.com/JesseNicholas00/FitByte/services/activity"
 	userScv "github.com/JesseNicholas00/FitByte/services/user"
 	"github.com/JesseNicholas00/FitByte/utils/ctxrizz"
 	"github.com/JesseNicholas00/FitByte/utils/logging"
@@ -33,6 +36,12 @@ func initControllers(
 	authMw := middlewares.NewAuthMiddleware(userService, cfg.experimental)
 	userController := userCtrl.NewUserController(userService, authMw)
 	ctrls = append(ctrls, userController)
+
+	activityRepository := activityRepo.NewActivityRepository(dbRizzer)
+	activityService := activitySvc.NewActivityService(activityRepository, dbRizzer)
+	activityMw := middlewares.NewAuthMiddleware(userService, cfg.experimental)
+	activityController := activityCtrl.NewActivityController(activityService, activityMw)
+	ctrls = append(ctrls, activityController)
 
 	return
 }
