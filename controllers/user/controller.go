@@ -23,5 +23,9 @@ func (ctrl *userController) Register(server *echo.Echo) error {
 	server.POST("/v1/register", ctrl.registerUser)
 	server.POST("/v1/login", ctrl.loginUser)
 
+	userGroup := server.Group("/v1/user")
+	userGroup.Use(ctrl.authMw.Process)
+	userGroup.GET("/find", ctrl.findUser)
+
 	return nil
 }

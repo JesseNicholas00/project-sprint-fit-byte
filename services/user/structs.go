@@ -2,6 +2,7 @@ package user
 
 import (
 	"errors"
+
 	"github.com/asaskevich/govalidator"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
@@ -34,6 +35,17 @@ func (r AuthenticationUserReq) Validation() error {
 	}
 
 	return errs
+}
+
+type FindUserRes struct {
+	Name       *string `json:"name"`
+	Email      *string `json:"email"`
+	Preference *string `json:"preference"`
+	WeightUnit *string `json:"weightUnit"`
+	HeightUnit *string `json:"heightUnit"`
+	Weight     *int    `json:"weight"`
+	Height     *int    `json:"height"`
+	ImageURI   *string `json:"imageUri"`
 }
 
 type AuthenticationUserRes struct {
