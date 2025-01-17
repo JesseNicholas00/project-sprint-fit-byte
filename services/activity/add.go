@@ -15,7 +15,10 @@ func (s *activityServiceImpl) AddActivity(ctx context.Context, req AddActivityRe
 		return err
 	}
 
-	activityId := uuid.New()
+	activityId, err := uuid.NewV7()
+	if err != nil {
+		return errorutil.AddCurrentContext(err)
+	}
 
 	switch req.ActivityType {
 	case "Walking", "Yoga", "Stretching":
@@ -26,10 +29,15 @@ func (s *activityServiceImpl) AddActivity(ctx context.Context, req AddActivityRe
 		res.CaloriesBurned = req.DurationInMinutes * 10
 	}
 
+	doneAt, err := helper.MustParse(req.DoneAt)
+	if err != nil {
+		return errorutil.AddCurrentContext(err)
+	}
+
 	activity := activity.Activity{
 		ActivityId:        activityId,
 		ActivityType:      req.ActivityType,
-		DoneAt:            helper.MustParseDateOnly(req.DoneAt),
+		DoneAt:            doneAt,
 		DurationInMinutes: req.DurationInMinutes,
 		CaloriesBurned:    res.CaloriesBurned,
 		CreateAt:          time.Now(),
