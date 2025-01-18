@@ -8,4 +8,5 @@ import (
 
 type ActivityRepository interface {
 	AddActivity(ctx context.Context, activity Activity, userId uuid.UUID) error
+	GetActivityByFilters(ctx context.Context, filter FilterActivity) ([]Activity, error)
 }
