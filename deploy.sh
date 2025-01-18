@@ -2,7 +2,7 @@
 
 echo "Building project"
 
-env GOOS=linux GOARCH=arm64 go build -o gogo-manager.out
+env GOOS=linux GOARCH=arm64 go build -o fit-byte.out
 
 echo "Finished building project"
 
@@ -10,7 +10,7 @@ echo "Finished building project"
 KEY="../project-sprint-infra/projectsprint.key"
 
 # Files/folders to upload
-FILES="gogo-manager.out .env migrations"
+FILES="fit-byte.out .env migrations"
 
 # Destination directory on the remote servers
 DEST="/home/ubuntu/"
