@@ -59,14 +59,14 @@ type FindUserRes struct {
 }
 
 type UpdateUserRes struct {
-	Name       *string `json:"name"`
-	Email      *string `json:"email"`
-	Preference *string `json:"preference"`
-	WeightUnit *string `json:"weightUnit"`
-	HeightUnit *string `json:"heightUnit"`
-	Weight     *int    `json:"weight"`
-	Height     *int    `json:"height"`
-	ImageURI   *string `json:"imageUri"`
+	Name       string `json:"name"`
+	Email      string `json:"email"`
+	Preference string `json:"preference"`
+	WeightUnit string `json:"weightUnit"`
+	HeightUnit string `json:"heightUnit"`
+	Weight     int    `json:"weight"`
+	Height     int    `json:"height"`
+	ImageURI   string `json:"imageUri"`
 }
 
 type AuthenticationUserRes struct {

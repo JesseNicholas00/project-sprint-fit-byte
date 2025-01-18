@@ -34,5 +34,5 @@ func (repo *userRepositoryImpl) UpdateUser(
 		}
 	}
 
-	return user, nil
+	return
 }

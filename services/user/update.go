@@ -57,20 +57,20 @@ func (svc *userServiceImpl) UpdateUser(
 			user.ImageURI.V = *req.ImageURI
 		}
 
-		_, err = svc.repo.UpdateUser(ctx, user)
+		savedUser, err := svc.repo.UpdateUser(ctx, user)
 		if err != nil {
 			return errorutil.AddCurrentContext(err)
 		}
 
 		*res = UpdateUserRes{
-			Preference: &user.Preference.V,
-			WeightUnit: &user.WeightUnit.V,
-			HeightUnit: &user.HeightUnit.V,
-			Weight:     &user.Weight.V,
-			Height:     &user.Height.V,
-			Email:      &user.Email,
-			Name:       &user.Name.V,
-			ImageURI:   &user.ImageURI.V,
+			Preference: savedUser.Preference.V,
+			WeightUnit: savedUser.WeightUnit.V,
+			HeightUnit: savedUser.HeightUnit.V,
+			Weight:     savedUser.Weight.V,
+			Height:     savedUser.Height.V,
+			Email:      savedUser.Email,
+			Name:       savedUser.Name.V,
+			ImageURI:   savedUser.ImageURI.V,
 		}
 
 		return nil
