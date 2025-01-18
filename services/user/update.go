@@ -49,12 +49,12 @@ func (svc *userServiceImpl) UpdateUser(
 			user.Height = *req.Height
 		}
 
-		if req.Name != nil {
-			user.Name.Scan(*req.Name)
+		if req.Name.V != nil {
+			user.Name.Scan(*req.Name.V)
 		}
 
-		if req.ImageURI != nil {
-			user.ImageURI.Scan(*req.ImageURI)
+		if req.ImageURI.V != nil {
+			user.ImageURI.Scan(*req.ImageURI.V)
 		}
 
 		savedUser, err := svc.repo.UpdateUser(ctx, user)

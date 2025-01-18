@@ -24,6 +24,12 @@ type AddActivityRes struct {
 	UpdateAt          string `json:"updatedAt"`
 }
 
+type UpdateActivityReq struct {
+	ActivityType      optional.OptionalStr `json:"activityType" validate:"omitnil,oneof=Walking Yoga Stretching Cycling Swimming Dancing Hiking Running HIIT JumpRope"`
+	DoneAt            optional.OptionalStr `json:"doneAt" validate:"omitnil,iso8601"`
+	DurationInMinutes optional.OptionalInt `json:"durationInMinutes" validate:"omitnil,min=1"`
+}
+
 type GetActivityReq struct {
 	Limit             *int   `query:"limit"`
 	Offset            *int   `query:"offset"`
@@ -32,10 +38,4 @@ type GetActivityReq struct {
 	DoneAtTo          string `query:"done_at_to"`
 	CaloriesBurnedMin int    `query:"calories_burned_min"`
 	CaloriesBurnedMax int    `query:"calories_burned_max"`
-}
-
-type UpdateActivityReq struct {
-	ActivityType      optional.OptionalStr `json:"activityType" validate:"omitnil,oneof=Walking Yoga Stretching Cycling Swimming Dancing Hiking Running HIIT JumpRope"`
-	DoneAt            optional.OptionalStr `json:"doneAt" validate:"omitnil,iso8601"`
-	DurationInMinutes optional.OptionalInt `json:"durationInMinutes" validate:"omitnil,min=1"`
 }
