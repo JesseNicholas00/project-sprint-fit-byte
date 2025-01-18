@@ -23,7 +23,7 @@ func (svc *userServiceImpl) UpdateUser(
 	}
 
 	return transaction.RunWithAutoCommit(&sess, func() error {
-		user, err := svc.repo.FindUserByID(ctx, userID)
+		user, err := svc.repo.FindUserByUserID(ctx, userID)
 		switch {
 		case err != nil:
 			return errorutil.AddCurrentContext(err)
