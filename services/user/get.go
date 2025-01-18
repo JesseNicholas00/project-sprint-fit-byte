@@ -15,21 +15,21 @@ func (svc *userServiceImpl) FindUser(
 		return err
 	}
 
-	user, err := svc.repo.FindUserByID(ctx, userID)
+	user, err := svc.repo.FindUserByUserID(ctx, userID)
 	switch {
 	case err != nil:
 		return errorutil.AddCurrentContext(err)
 	}
 
 	*res = FindUserRes{
-		Preference: &user.Preference.V,
-		WeightUnit: &user.WeightUnit.V,
-		HeightUnit: &user.HeightUnit.V,
-		Weight:     &user.Weight.V,
-		Height:     &user.Height.V,
-		Email:      &user.Email,
-		Name:       &user.Name.V,
-		ImageURI:   &user.ImageURI.V,
+		Preference: user.Preference.V,
+		WeightUnit: user.WeightUnit.V,
+		HeightUnit: user.HeightUnit.V,
+		Weight:     user.Weight.V,
+		Height:     user.Height.V,
+		Email:      user.Email,
+		Name:       user.Name.V,
+		ImageURI:   user.ImageURI.V,
 	}
 
 	return nil

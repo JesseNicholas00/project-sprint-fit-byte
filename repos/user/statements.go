@@ -6,10 +6,10 @@ import (
 )
 
 type statements struct {
-	create      *sqlx.NamedStmt
-	findByEmail *sqlx.Stmt
-	findByID    *sqlx.Stmt
-	update      *sqlx.NamedStmt
+	create       *sqlx.NamedStmt
+	findByEmail  *sqlx.Stmt
+	findByUserID *sqlx.Stmt
+	update       *sqlx.NamedStmt
 }
 
 func prepareStatements() statements {
@@ -23,10 +23,10 @@ func prepareStatements() statements {
 			FROM users
 			WHERE email = $1 LIMIT 1
 		`),
-		findByID: statementutil.MustPrepare(`
+		findByUserID: statementutil.MustPrepare(`
 			SELECT *
 			FROM users
-			WHERE user_id = $1 LIMIT 1
+			WHERE user_id = $1
 		`),
 		update: statementutil.MustPrepareNamed(`
 			UPDATE users
