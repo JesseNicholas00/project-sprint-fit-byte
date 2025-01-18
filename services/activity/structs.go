@@ -33,9 +33,9 @@ type UpdateActivityReq struct {
 type GetActivityReq struct {
 	Limit             *int   `query:"limit"`
 	Offset            *int   `query:"offset"`
-	ActivityType      string `query:"activity_type"`
-	DoneAtFrom        string `query:"done_at_from"`
-	DoneAtTo          string `query:"done_at_to"`
-	CaloriesBurnedMin int    `query:"calories_burned_min"`
-	CaloriesBurnedMax int    `query:"calories_burned_max"`
+	ActivityType      string `query:"activityType"`
+	DoneAtFrom        string `query:"doneAtFrom"`
+	DoneAtTo          string `query:"doneAtTo"`
+	CaloriesBurnedMin int    `query:"caloriesBurnedMin"`
+	CaloriesBurnedMax int    `query:"caloriesBurnedMax"`
 }
