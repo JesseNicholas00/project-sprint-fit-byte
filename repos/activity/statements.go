@@ -9,6 +9,7 @@ type statements struct {
 	add             *sqlx.NamedStmt
 	getByActivityId *sqlx.Stmt
 	update          *sqlx.Stmt
+	delete          *sqlx.Stmt
 }
 
 func prepareStatements() statements {
@@ -26,5 +27,9 @@ func prepareStatements() statements {
 			WHERE activity_id = $6 AND user_id = $7
 			RETURNING *
 		`),
+		delete: statementutil.MustPrepare(`
+			DELETE from activities
+			where activity_id = $1
+			`),
 	}
 }
