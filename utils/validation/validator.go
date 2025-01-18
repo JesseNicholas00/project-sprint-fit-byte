@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	types "github.com/JesseNicholas00/FitByte/types/optional"
+	"github.com/JesseNicholas00/FitByte/utils/validation/iso8601"
 	"github.com/JesseNicholas00/FitByte/utils/validation/optional"
 	"github.com/JesseNicholas00/FitByte/utils/validation/uri"
 
@@ -29,6 +30,10 @@ var customFields = []customField{
 	{
 		Tag:       "complete_uri",
 		Validator: uri.ValidateCompleteURI,
+	},
+	{
+		Tag:       "iso8601",
+		Validator: iso8601.ValidateIso8601,
 	},
 }
 
