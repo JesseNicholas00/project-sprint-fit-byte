@@ -1,7 +1,7 @@
 CREATE TABLE users
 (
     user_id     UUID PRIMARY KEY,
-    user_name   TEXT,
+    name        TEXT,
     email       TEXT NOT NULL UNIQUE,
     password    TEXT NOT NULL,
     preference  TEXT,
