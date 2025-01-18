@@ -26,6 +26,7 @@ func (ctrl *userController) Register(server *echo.Echo) error {
 	userGroup := server.Group("/v1/user")
 	userGroup.Use(ctrl.authMw.Process)
 	userGroup.GET("", ctrl.findUser)
+	userGroup.PATCH("", ctrl.updateUser)
 
 	return nil
 }
