@@ -22,7 +22,6 @@ func (svc *activityServiceImpl) UpdateActivity(ctx context.Context, req UpdateAc
 
 	return transaction.RunWithAutoCommit(&sess, func() error {
 		activity, err := svc.repo.FindActivityByActivityId(ctx, activityId, userId)
-
 		// Check if activity is not found
 		if err != nil {
 			switch err {
@@ -34,8 +33,9 @@ func (svc *activityServiceImpl) UpdateActivity(ctx context.Context, req UpdateAc
 		}
 
 		// Only process DoneAt if it's defined and has a value
+		// Custom formatting for doneAt
 		if req.DoneAt.Defined && req.DoneAt.V != nil {
-			doneAt, err := helper.MustParse(*req.DoneAt.V)
+			doneAt, err := time.Parse("2006-01-02T15:04:05.000Z07:00", *req.DoneAt.V)
 			if err != nil {
 				return errorutil.AddCurrentContext(err)
 			}
@@ -76,7 +76,7 @@ func (svc *activityServiceImpl) UpdateActivity(ctx context.Context, req UpdateAc
 		*res = AddActivityRes{
 			ActivityId:        result.ActivityId.String(),
 			ActivityType:      result.ActivityType,
-			DoneAt:            result.DoneAt.Format(time.RFC3339),
+			DoneAt:            result.DoneAt.Format("2006-01-02T15:04:05.000Z07:00"),
 			DurationInMinutes: result.DurationInMinutes,
 			CaloriesBurned:    result.CaloriesBurned,
 			CreateAt:          result.CreateAt.Format(time.RFC3339),
