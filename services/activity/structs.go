@@ -12,6 +12,8 @@ type AddActivityReq struct {
 	UserID            uuid.UUID `json:"userId"`
 }
 
+type GetActivityResp []AddActivityRes
+
 type AddActivityRes struct {
 	ActivityId        string `json:"activityId"`
 	ActivityType      string `json:"activityType"`
@@ -20,6 +22,16 @@ type AddActivityRes struct {
 	CaloriesBurned    int    `json:"caloriesBurned"`
 	CreateAt          string `json:"createdAt"`
 	UpdateAt          string `json:"updatedAt"`
+}
+
+type GetActivityReq struct {
+	Limit             *int   `query:"limit"`
+	Offset            *int   `query:"offset"`
+	ActivityType      string `query:"activity_type"`
+	DoneAtFrom        string `query:"done_at_from"`
+	DoneAtTo          string `query:"done_at_to"`
+	CaloriesBurnedMin int    `query:"calories_burned_min"`
+	CaloriesBurnedMax int    `query:"calories_burned_max"`
 }
 
 type UpdateActivityReq struct {
