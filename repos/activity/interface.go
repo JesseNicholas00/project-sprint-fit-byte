@@ -11,4 +11,5 @@ type ActivityRepository interface {
 	FindActivityByActivityId(ctx context.Context, activityId, userId string) (Activity, error)
 	UpdateActivity(ctx context.Context, activity Activity, activityId, userId string) (Activity, error)
 	GetActivityByFilters(ctx context.Context, filter FilterActivity) ([]Activity, error)
+	DeleteActivity(ctx context.Context, activityId string) error
 }

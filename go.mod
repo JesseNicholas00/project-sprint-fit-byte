@@ -8,7 +8,6 @@ require (
 	github.com/bytedance/sonic v1.12.7
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/pkg/errors v0.9.1
-	github.com/shoenig/test v0.6.4
 	github.com/testcontainers/testcontainers-go v0.35.0
 	golang.org/x/crypto v0.32.0
 )
@@ -43,7 +42,6 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
