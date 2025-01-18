@@ -3,6 +3,7 @@ package user
 import (
 	"errors"
 
+	"github.com/JesseNicholas00/FitByte/types/optional"
 	"github.com/asaskevich/govalidator"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
@@ -14,13 +15,13 @@ type AuthenticationUserReq struct {
 }
 
 type UpdateUserReq struct {
-	Name       *string `json:"name" validate:"omitempty,min=2,max=60"`
-	Preference *string `json:"preference" validate:"required,oneof=CARDIO WEIGHT"`
-	WeightUnit *string `json:"weightUnit" validate:"required,oneof=KG LBS"`
-	HeightUnit *string `json:"heightUnit" validate:"required,oneof=CM INCH"`
-	Weight     *int    `json:"weight" validate:"required,min=10,max=1000"`
-	Height     *int    `json:"height" validate:"required,min=3,max=250"`
-	ImageURI   *string `json:"imageUri" validate:"omitempty,url"`
+	Name       optional.OptionalStr `json:"name" validate:"omitnil,min=2,max=60"`
+	Preference *string              `json:"preference" validate:"required,oneof=CARDIO WEIGHT"`
+	WeightUnit *string              `json:"weightUnit" validate:"required,oneof=KG LBS"`
+	HeightUnit *string              `json:"heightUnit" validate:"required,oneof=CM INCH"`
+	Weight     *int                 `json:"weight" validate:"required,min=10,max=1000"`
+	Height     *int                 `json:"height" validate:"required,min=3,max=250"`
+	ImageURI   optional.OptionalStr `json:"imageUri" validate:"omitnil,complete_uri"`
 }
 
 func (_ AuthenticationUserReq) BindBody() {}
