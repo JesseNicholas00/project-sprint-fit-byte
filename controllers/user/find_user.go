@@ -20,5 +20,5 @@ func (ctrl *userController) findUser(c echo.Context) error {
 		return errorutil.AddCurrentContext(err)
 	}
 
-	return c.JSON(http.StatusCreated, res)
+	return c.JSON(http.StatusOK, res)
 }
