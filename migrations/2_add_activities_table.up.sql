@@ -1,6 +1,6 @@
 CREATE TABLE activities (
   activity_id UUID PRIMARY KEY,
-  user_id UUID REFERENCES users(user_id),
+  user_id UUID,
   activity_type VARCHAR(255) NOT NULL,
   done_at TIMESTAMP NOT NULL,
   calories_burned INTEGER NOT NULL,
