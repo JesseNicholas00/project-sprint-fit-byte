@@ -8,3 +8,7 @@ CREATE TABLE activities (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX IF NOT EXISTS activities_activity_type_idx ON activities(activity_type);
+CREATE INDEX IF NOT EXISTS activities_done_at_idx ON activities(done_at);
+CREATE INDEX IF NOT EXISTS activities_calories_burned_idx ON activities(calories_burned);
