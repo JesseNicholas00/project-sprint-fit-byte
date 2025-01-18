@@ -27,7 +27,7 @@ func (repo *activityRepositoryImpl) GetActivityByFilters(ctx context.Context, fi
 			return nil, errorutil.AddCurrentContext(err)
 		}
 		conditions = append(conditions,
-			mewsql.WithCondition("done_at >= ?", doneAtFrom),
+			mewsql.WithCondition("done_at < ?", doneAtFrom),
 		)
 	}
 
@@ -37,7 +37,7 @@ func (repo *activityRepositoryImpl) GetActivityByFilters(ctx context.Context, fi
 			return nil, errorutil.AddCurrentContext(err)
 		}
 		conditions = append(conditions,
-			mewsql.WithCondition("done_at <= ?", doneAtTo),
+			mewsql.WithCondition("done_at > ?", doneAtTo),
 		)
 	}
 
