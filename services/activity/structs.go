@@ -1,6 +1,7 @@
 package activity
 
 import (
+	"github.com/JesseNicholas00/FitByte/types/optional"
 	"github.com/google/uuid"
 )
 
@@ -19,4 +20,10 @@ type AddActivityRes struct {
 	CaloriesBurned    int    `json:"caloriesBurned"`
 	CreateAt          string `json:"createdAt"`
 	UpdateAt          string `json:"updatedAt"`
+}
+
+type UpdateActivityReq struct {
+	ActivityType      optional.OptionalStr `json:"activityType" validate:"omitnil,oneof=Walking Yoga Stretching Cycling Swimming Dancing Hiking Running HIIT JumpRope"`
+	DoneAt            optional.OptionalStr `json:"doneAt" validate:"omitnil,iso8601"`
+	DurationInMinutes optional.OptionalInt `json:"durationInMinutes" validate:"omitnil,min=1"`
 }
