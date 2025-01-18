@@ -7,8 +7,8 @@ CREATE TABLE users
     preference  TEXT,
     weight_unit TEXT,
     height_unit TEXT,
-    weight      INTEGER,
-    height      INTEGER,
+    weight      INTEGER DEFAULT 0,
+    height      INTEGER DEFAULT 0,
     image_uri   TEXT
 );
 

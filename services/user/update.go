@@ -30,31 +30,31 @@ func (svc *userServiceImpl) UpdateUser(
 		}
 
 		if req.Preference != nil {
-			user.Preference.V = *req.Preference
+			user.Preference.Scan(*req.Preference)
 		}
 
 		if req.WeightUnit != nil {
-			user.WeightUnit.V = *req.WeightUnit
+			user.WeightUnit.Scan(*req.WeightUnit)
 		}
 
 		if req.HeightUnit != nil {
-			user.HeightUnit.V = *req.HeightUnit
+			user.HeightUnit.Scan(*req.HeightUnit)
 		}
 
 		if req.Weight != nil {
-			user.Weight.V = *req.Weight
+			user.Weight = *req.Weight
 		}
 
 		if req.Height != nil {
-			user.Height.V = *req.Height
+			user.Height = *req.Height
 		}
 
 		if req.Name != nil {
-			user.Name.V = *req.Name
+			user.Name.Scan(*req.Name)
 		}
 
 		if req.ImageURI != nil {
-			user.ImageURI.V = *req.ImageURI
+			user.ImageURI.Scan(*req.ImageURI)
 		}
 
 		savedUser, err := svc.repo.UpdateUser(ctx, user)
@@ -66,8 +66,8 @@ func (svc *userServiceImpl) UpdateUser(
 			Preference: savedUser.Preference.V,
 			WeightUnit: savedUser.WeightUnit.V,
 			HeightUnit: savedUser.HeightUnit.V,
-			Weight:     savedUser.Weight.V,
-			Height:     savedUser.Height.V,
+			Weight:     savedUser.Weight,
+			Height:     savedUser.Height,
 			Email:      savedUser.Email,
 			Name:       savedUser.Name.V,
 			ImageURI:   savedUser.ImageURI.V,
