@@ -12,6 +12,8 @@ type AddActivityReq struct {
 	UserID            uuid.UUID `json:"userId"`
 }
 
+type GetActivityResp []AddActivityRes
+
 type AddActivityRes struct {
 	ActivityId        string `json:"activityId"`
 	ActivityType      string `json:"activityType"`
@@ -26,4 +28,14 @@ type UpdateActivityReq struct {
 	ActivityType      optional.OptionalStr `json:"activityType" validate:"omitnil,oneof=Walking Yoga Stretching Cycling Swimming Dancing Hiking Running HIIT JumpRope"`
 	DoneAt            optional.OptionalStr `json:"doneAt" validate:"omitnil,iso8601"`
 	DurationInMinutes optional.OptionalInt `json:"durationInMinutes" validate:"omitnil,min=1"`
+}
+
+type GetActivityReq struct {
+	Limit             *int   `query:"limit"`
+	Offset            *int   `query:"offset"`
+	ActivityType      string `query:"activity_type"`
+	DoneAtFrom        string `query:"done_at_from"`
+	DoneAtTo          string `query:"done_at_to"`
+	CaloriesBurnedMin int    `query:"calories_burned_min"`
+	CaloriesBurnedMax int    `query:"calories_burned_max"`
 }

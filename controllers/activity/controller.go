@@ -15,6 +15,7 @@ type activityController struct {
 func (ctrl *activityController) Register(server *echo.Echo) error {
 	g := server.Group("/v1/activity", ctrl.authMw.Process) // Protected routes
 
+	g.GET("", ctrl.getActivityByFilters)
 	g.POST("", ctrl.addActivity)
 	g.PATCH("/:activityId", ctrl.updateActivity)
 
