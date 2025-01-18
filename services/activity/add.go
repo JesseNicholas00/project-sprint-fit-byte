@@ -20,14 +20,18 @@ func (s *activityServiceImpl) AddActivity(ctx context.Context, req AddActivityRe
 		return errorutil.AddCurrentContext(err)
 	}
 
+	var caloriesBurned int
+
 	switch req.ActivityType {
 	case "Walking", "Yoga", "Stretching":
-		res.CaloriesBurned = req.DurationInMinutes * 4
+		caloriesBurned = req.DurationInMinutes * 4
 	case "Cycling", "Swimming", "Dancing":
-		res.CaloriesBurned = req.DurationInMinutes * 8
+		caloriesBurned = req.DurationInMinutes * 8
 	case "Hiking", "Running", "HIIT", "JumpRope":
-		res.CaloriesBurned = req.DurationInMinutes * 10
+		caloriesBurned = req.DurationInMinutes * 10
 	}
+
+	res.CaloriesBurned = caloriesBurned
 
 	doneAt, err := helper.MustParse(req.DoneAt)
 	if err != nil {
