@@ -1,7 +1,6 @@
 package activity
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/JesseNicholas00/FitByte/services/activity"
@@ -14,7 +13,7 @@ import (
 func (ctrl *activityController) addActivity(ctx echo.Context) error {
 	req := activity.AddActivityReq{}
 	if err := request.BindAndValidate(ctx, &req); err != nil {
-		log.Printf("error binding and validating: %v", err)
+		// log.Printf("error binding and validating: %v", err)
 		return err
 	}
 
