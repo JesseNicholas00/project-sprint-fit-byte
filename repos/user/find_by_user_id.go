@@ -6,7 +6,7 @@ import (
 	"github.com/JesseNicholas00/FitByte/utils/errorutil"
 )
 
-func (repo *userRepositoryImpl) FindUserByID(ctx context.Context, id string) (User, error) {
+func (repo *userRepositoryImpl) FindUserByUserID(ctx context.Context, id string) (User, error) {
 	if err := ctx.Err(); err != nil {
 		return User{}, err
 	}
@@ -19,7 +19,7 @@ func (repo *userRepositoryImpl) FindUserByID(ctx context.Context, id string) (Us
 	user := User{}
 
 	err = sess.
-		Stmt(ctx, repo.statements.findByID).
+		Stmt(ctx, repo.statements.findByUserID).
 		QueryRowxContext(ctx, id).
 		StructScan(&user)
 
