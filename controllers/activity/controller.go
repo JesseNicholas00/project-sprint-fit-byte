@@ -17,6 +17,7 @@ func (ctrl *activityController) Register(server *echo.Echo) error {
 
 	g.GET("", ctrl.getActivityByFilters)
 	g.POST("", ctrl.addActivity)
+	g.PATCH("/:activityId", ctrl.updateActivity)
 
 	return nil
 }
