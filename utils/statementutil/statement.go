@@ -1,6 +1,9 @@
 package statementutil
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/jmoiron/sqlx"
+	"sync"
+)
 
 var globalDb *sqlx.DB
 var cleanupFuncs []func()
@@ -49,15 +52,28 @@ func checkGlobalDb() {
 	}
 }
 
-func PrepareOnce(sqlQuery string) (stmt *sqlx.Stmt, closeFunc func(), err error) {
-	checkGlobalDb()
+var cachedStmt = make(map[string]*sqlx.Stmt)
+var muCachedStmt sync.Mutex
 
-	stmt, err = globalDb.Preparex(sqlQuery)
+func GetCachedStmt(sqlQuery string) *sqlx.Stmt {
+	stmt, ok := cachedStmt[sqlQuery]
+	if ok {
+		return stmt
+	}
+
+	checkGlobalDb()
+	stmt, err := globalDb.Preparex(sqlQuery)
 	if err != nil {
-		return nil, nil, err
+		panic(err)
 	}
-	closeFunc = func() {
+
+	muCachedStmt.Lock()
+	cachedStmt[sqlQuery] = stmt
+	muCachedStmt.Unlock()
+
+	cleanupFuncs = append(cleanupFuncs, func() {
 		stmt.Close()
-	}
-	return stmt, closeFunc, nil
+	})
+
+	return stmt
 }

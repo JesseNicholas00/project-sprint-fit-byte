@@ -72,13 +72,7 @@ func (repo *activityRepositoryImpl) GetActivityByFilters(ctx context.Context, fi
 		return nil, err
 	}
 
-	stmt, closeStmt, err := statementutil.PrepareOnce(sql)
-	if err != nil {
-		err = errorutil.AddCurrentContext(err)
-		return nil, err
-	}
-	defer closeStmt()
-
+	stmt := statementutil.GetCachedStmt(sql)
 	rows, err := sess.Stmt(ctx, stmt).QueryxContext(ctx, args...)
 	if err != nil {
 		err = errorutil.AddCurrentContext(err)
