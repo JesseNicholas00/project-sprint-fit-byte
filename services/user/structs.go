@@ -7,6 +7,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"net/url"
+	"slices"
 	"strings"
 )
 
@@ -55,15 +56,15 @@ func (r UpdateUserReq) Validation() error {
 		}
 	}
 
-	if _, valid := validPreferences[r.Preference]; !valid {
+	if !slices.Contains(validPreferences, r.Preference) {
 		errs = errors.Join(errs, errors.New("Preference nya ga valid"))
 	}
 
-	if _, valid := validWeightUnits[r.WeightUnit]; !valid {
+	if !slices.Contains(validWeightUnits, r.WeightUnit) {
 		errs = errors.Join(errs, errors.New("WeightUnit nya ga valid"))
 	}
 
-	if _, valid := validHeightUnits[r.HeightUnit]; !valid {
+	if !slices.Contains(validHeightUnits, r.HeightUnit) {
 		errs = errors.Join(errs, errors.New("HeightUnit nya ga valid"))
 	}
 
@@ -92,20 +93,11 @@ func (r UpdateUserReq) Validation() error {
 	return errs
 }
 
-var validPreferences = map[string]struct{}{
-	"CARDIO": {},
-	"WEIGHT": {},
-}
+var validPreferences = []string{"CARDIO", "WEIGHT"}
 
-var validWeightUnits = map[string]struct{}{
-	"KG":  {},
-	"LBS": {},
-}
+var validWeightUnits = []string{"KG", "LBS"}
 
-var validHeightUnits = map[string]struct{}{
-	"CM":   {},
-	"INCH": {},
-}
+var validHeightUnits = []string{"CM", "INCH"}
 
 type FindUserRes struct {
 	Name       string `json:"name"`
