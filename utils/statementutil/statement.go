@@ -48,3 +48,16 @@ func checkGlobalDb() {
 		)
 	}
 }
+
+func PrepareOnce(sqlQuery string) (stmt *sqlx.Stmt, closeFunc func(), err error) {
+	checkGlobalDb()
+
+	stmt, err = globalDb.Preparex(sqlQuery)
+	if err != nil {
+		return nil, nil, err
+	}
+	closeFunc = func() {
+		stmt.Close()
+	}
+	return stmt, closeFunc, nil
+}
