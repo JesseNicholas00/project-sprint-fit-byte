@@ -4,8 +4,6 @@ import (
 	"github.com/bytedance/sonic"
 )
 
-var parser = sonic.ConfigFastest
-
 type OptionalStr struct {
 	Defined bool
 	V       *string
@@ -13,5 +11,5 @@ type OptionalStr struct {
 
 func (o *OptionalStr) UnmarshalJSON(data []byte) error {
 	o.Defined = true
-	return parser.Unmarshal(data, &o.V)
+	return sonic.ConfigFastest.Unmarshal(data, &o.V)
 }

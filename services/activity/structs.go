@@ -55,6 +55,43 @@ type UpdateActivityReq struct {
 	DurationInMinutes optional.OptionalInt `json:"durationInMinutes" validate:"omitnil,min=1"`
 }
 
+func (_ UpdateActivityReq) BindBody() {}
+
+func (r UpdateActivityReq) Validation() error {
+	var errs error
+
+	if r.ActivityType.Defined {
+		switch {
+		case r.ActivityType.V == nil:
+			errs = errors.Join(errs, errors.New("ActivityType ga valid cuy"))
+		case !slices.Contains(validActivityTypes, *r.ActivityType.V):
+			errs = errors.Join(errs, errors.New("ActivityType ga valid cuy"))
+		}
+	}
+
+	if r.DoneAt.Defined {
+		switch {
+		case r.DoneAt.V == nil:
+			errs = errors.Join(errs, errors.New("DoneAt ga valid cuy"))
+		default:
+			if _, err := time.Parse(time.RFC3339, *r.DoneAt.V); err != nil {
+				errs = errors.Join(errs, errors.New("DoneAt formatnya salah cuy"))
+			}
+		}
+	}
+
+	if r.DurationInMinutes.Defined {
+		switch {
+		case r.DurationInMinutes.V == nil:
+			errs = errors.Join(errs, errors.New("DurationInMinutes ga valid cuy"))
+		case *r.DurationInMinutes.V < 1:
+			errs = errors.Join(errs, errors.New("DurationInMinutes minimal 1"))
+		}
+	}
+
+	return errs
+}
+
 type GetActivityReq struct {
 	Limit             *int   `query:"limit"`
 	Offset            *int   `query:"offset"`
