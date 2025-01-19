@@ -2,6 +2,7 @@ package activity
 
 import (
 	"context"
+	"github.com/JesseNicholas00/FitByte/utils/statementutil"
 	"time"
 
 	"github.com/JesseNicholas00/FitByte/utils/errorutil"
@@ -71,7 +72,14 @@ func (repo *activityRepositoryImpl) GetActivityByFilters(ctx context.Context, fi
 		return nil, err
 	}
 
-	rows, err := sess.Ext.QueryxContext(ctx, sql, args...)
+	stmt, closeStmt, err := statementutil.PrepareOnce(sql)
+	if err != nil {
+		err = errorutil.AddCurrentContext(err)
+		return nil, err
+	}
+	defer closeStmt()
+
+	rows, err := sess.Stmt(ctx, stmt).QueryxContext(ctx, args...)
 	if err != nil {
 		err = errorutil.AddCurrentContext(err)
 		return nil, err
