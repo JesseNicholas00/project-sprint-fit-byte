@@ -1,8 +1,11 @@
 package activity
 
 import (
+	"errors"
 	"github.com/JesseNicholas00/FitByte/types/optional"
 	"github.com/google/uuid"
+	"slices"
+	"time"
 )
 
 type AddActivityReq struct {
@@ -11,6 +14,28 @@ type AddActivityReq struct {
 	DurationInMinutes int       `json:"durationInMinutes" validate:"required,min=1"`
 	UserID            uuid.UUID `json:"userId"`
 }
+
+func (_ AddActivityReq) BindBody() {}
+
+func (r AddActivityReq) Validation() error {
+	var errs error
+
+	if !slices.Contains(validActivityTypes, r.ActivityType) {
+		errs = errors.Join(errs, errors.New("ActivityType ga valid cuy"))
+	}
+
+	if _, err := time.Parse(time.RFC3339, r.DoneAt); err != nil {
+		errs = errors.Join(errs, errors.New("DoneAt formatnya salah cuy"))
+	}
+
+	if r.DurationInMinutes < 1 {
+		errs = errors.Join(errs, errors.New("DurationInMinutes minimal 1"))
+	}
+
+	return errs
+}
+
+var validActivityTypes = []string{"Walking", "Yoga", "Stretching", "Cycling", "Swimming", "Dancing", "Hiking", "Running", "HIIT", "JumpRope"}
 
 type GetActivityResp []AddActivityRes
 
