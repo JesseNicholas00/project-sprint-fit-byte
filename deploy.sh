@@ -10,7 +10,7 @@ echo "Finished building project"
 KEY="../project-sprint-infra/projectsprint.key"
 
 # Files/folders to upload
-FILES="fit-byte.out .env migrations"
+FILES="fit-byte.out .env migrations start.sh"
 
 # Destination directory on the remote servers
 DEST="/home/ubuntu/"
@@ -29,5 +29,5 @@ for SERVER in "${SERVERS[@]}"; do
   echo "Uploading files to ${SERVER}..."
   scp -i "${KEY}" -r ${FILES} "ubuntu@${SERVER}:${DEST}"
   echo "Done uploading to ${SERVER}."
-  ssh ubuntu@${SERVER} -i ../project-sprint-infra/projectsprint.key
+  ssh ubuntu@"${SERVER}" -i ../project-sprint-infra/projectsprint.key
 done
