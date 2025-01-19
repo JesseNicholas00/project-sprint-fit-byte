@@ -29,5 +29,5 @@ for SERVER in "${SERVERS[@]}"; do
   echo "Uploading files to ${SERVER}..."
   scp -i "${KEY}" -r ${FILES} "ubuntu@${SERVER}:${DEST}"
   echo "Done uploading to ${SERVER}."
-  echo
+  ssh ubuntu@${SERVER} -i ../project-sprint-infra/projectsprint.key
 done
