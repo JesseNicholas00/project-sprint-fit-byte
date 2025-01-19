@@ -12,4 +12,5 @@ CREATE TABLE users
     image_uri   TEXT
 );
 
+CREATE INDEX IF NOT EXISTS users_user_id_hash_idx ON users USING HASH (user_id);
 CREATE INDEX IF NOT EXISTS users_email_hash_idx ON users USING HASH (email);
