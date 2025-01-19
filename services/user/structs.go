@@ -2,11 +2,12 @@ package user
 
 import (
 	"errors"
-
 	"github.com/JesseNicholas00/FitByte/types/optional"
 	"github.com/asaskevich/govalidator"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
+	"net/url"
+	"strings"
 )
 
 type AuthenticationUserReq struct {
@@ -14,38 +15,96 @@ type AuthenticationUserReq struct {
 	Password string `json:"password"`
 }
 
-type UpdateUserReq struct {
-	Name       optional.OptionalStr `json:"name" validate:"omitnil,min=2,max=60"`
-	Preference *string              `json:"preference" validate:"required,oneof=CARDIO WEIGHT"`
-	WeightUnit *string              `json:"weightUnit" validate:"required,oneof=KG LBS"`
-	HeightUnit *string              `json:"heightUnit" validate:"required,oneof=CM INCH"`
-	Weight     *int                 `json:"weight" validate:"required,min=10,max=1000"`
-	Height     *int                 `json:"height" validate:"required,min=3,max=250"`
-	ImageURI   optional.OptionalStr `json:"imageUri" validate:"omitnil,complete_uri"`
-}
-
 func (_ AuthenticationUserReq) BindBody() {}
 
 func (r AuthenticationUserReq) Validation() error {
 	var errs error
 
-	if r.Email == "" {
-		errs = errors.Join(errs, errors.New("Email ga bole kosong"))
-	} else {
-		if !govalidator.IsEmail(r.Email) {
-			errs = errors.Join(errs, errors.New("Ini sih bukan email"))
+	if !govalidator.IsEmail(r.Email) {
+		errs = errors.Join(errs, errors.New("Ini sih bukan email"))
+	}
+
+	if len(r.Password) < 8 || len(r.Password) > 32 {
+		errs = errors.Join(errs, errors.New("Passwordnya 8-32 karakter bwang"))
+	}
+
+	return errs
+}
+
+type UpdateUserReq struct {
+	Name       optional.OptionalStr `json:"name" validate:"omitnil,min=2,max=60"`
+	Preference string               `json:"preference" validate:"required,oneof=CARDIO WEIGHT"`
+	WeightUnit string               `json:"weightUnit" validate:"required,oneof=KG LBS"`
+	HeightUnit string               `json:"heightUnit" validate:"required,oneof=CM INCH"`
+	Weight     int                  `json:"weight" validate:"required,min=10,max=1000"`
+	Height     int                  `json:"height" validate:"required,min=3,max=250"`
+	ImageURI   optional.OptionalStr `json:"imageUri" validate:"omitnil,complete_uri"`
+}
+
+func (_ UpdateUserReq) BindBody() {}
+
+func (r UpdateUserReq) Validation() error {
+	var errs error
+
+	if r.Name.Defined {
+		switch {
+		case r.Name.V == nil:
+			errs = errors.Join(errs, errors.New("Salah type om"))
+		case len(*r.Name.V) < 2 || len(*r.Name.V) > 60:
+			errs = errors.Join(errs, errors.New("Name itu harus 2-60 karakter"))
 		}
 	}
 
-	if r.Password == "" {
-		errs = errors.Join(errs, errors.New("Password ga bole kosong"))
-	} else {
-		if len(r.Password) < 8 || len(r.Password) > 32 {
-			errs = errors.Join(errs, errors.New("Passwordnya 8-32 karakter bwang"))
+	if _, valid := validPreferences[r.Preference]; !valid {
+		errs = errors.Join(errs, errors.New("Preference nya ga valid"))
+	}
+
+	if _, valid := validWeightUnits[r.WeightUnit]; !valid {
+		errs = errors.Join(errs, errors.New("WeightUnit nya ga valid"))
+	}
+
+	if _, valid := validHeightUnits[r.HeightUnit]; !valid {
+		errs = errors.Join(errs, errors.New("HeightUnit nya ga valid"))
+	}
+
+	if r.Weight < 10 || r.Weight > 1000 {
+		errs = errors.Join(errs, errors.New("Weight harus 10-1000"))
+	}
+
+	if r.Height < 3 || r.Height > 250 {
+		errs = errors.Join(errs, errors.New("Height harus 3-250"))
+	}
+
+	if r.ImageURI.Defined {
+		switch {
+		case r.ImageURI.V == nil:
+			errs = errors.Join(errs, errors.New("Salah type om"))
+		default:
+			imgURI, err := url.ParseRequestURI(*r.ImageURI.V)
+			if err != nil {
+				errs = errors.Join(errs, err)
+			} else if !strings.Contains(imgURI.Host, ".") {
+				errs = errors.Join(errs, errors.New("Salah url kayaknya om"))
+			}
 		}
 	}
 
 	return errs
+}
+
+var validPreferences = map[string]struct{}{
+	"CARDIO": {},
+	"WEIGHT": {},
+}
+
+var validWeightUnits = map[string]struct{}{
+	"KG":  {},
+	"LBS": {},
+}
+
+var validHeightUnits = map[string]struct{}{
+	"CM":   {},
+	"INCH": {},
 }
 
 type FindUserRes struct {

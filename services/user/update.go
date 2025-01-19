@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"github.com/JesseNicholas00/FitByte/utils/helper"
 
 	"github.com/JesseNicholas00/FitByte/utils/errorutil"
 	"github.com/JesseNicholas00/FitByte/utils/transaction"
@@ -29,32 +30,18 @@ func (svc *userServiceImpl) UpdateUser(
 			return errorutil.AddCurrentContext(err)
 		}
 
-		if req.Preference != nil {
-			user.Preference.Scan(*req.Preference)
-		}
+		user.Preference = helper.Assign(req.Preference)
+		user.WeightUnit = helper.Assign(req.WeightUnit)
+		user.HeightUnit = helper.Assign(req.HeightUnit)
+		user.Weight = req.Weight
+		user.Height = req.Height
 
-		if req.WeightUnit != nil {
-			user.WeightUnit.Scan(*req.WeightUnit)
-		}
-
-		if req.HeightUnit != nil {
-			user.HeightUnit.Scan(*req.HeightUnit)
-		}
-
-		if req.Weight != nil {
-			user.Weight = *req.Weight
-		}
-
-		if req.Height != nil {
-			user.Height = *req.Height
-		}
-
-		if req.Name.V != nil {
-			user.Name.Scan(*req.Name.V)
+		if req.Name.Defined {
+			user.Name = helper.Assign(*req.Name.V)
 		}
 
 		if req.ImageURI.V != nil {
-			user.ImageURI.Scan(*req.ImageURI.V)
+			user.ImageURI = helper.Assign(*req.ImageURI.V)
 		}
 
 		savedUser, err := svc.repo.UpdateUser(ctx, user)
