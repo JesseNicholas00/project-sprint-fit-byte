@@ -23,6 +23,7 @@ func (a *activityServiceImpl) GetActivityByFilters(ctx context.Context, params G
 		DoneAtTo:          params.DoneAtTo,
 		CaloriesBurnedMin: params.CaloriesBurnedMin,
 		CaloriesBurnedMax: params.CaloriesBurnedMax,
+		UserID:            userId,
 	})
 
 	if err != nil {
