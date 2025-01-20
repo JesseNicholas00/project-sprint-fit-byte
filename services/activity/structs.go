@@ -2,10 +2,11 @@ package activity
 
 import (
 	"errors"
-	"github.com/JesseNicholas00/FitByte/types/optional"
-	"github.com/google/uuid"
 	"slices"
 	"time"
+
+	"github.com/JesseNicholas00/FitByte/types/optional"
+	"github.com/google/uuid"
 )
 
 type AddActivityReq struct {

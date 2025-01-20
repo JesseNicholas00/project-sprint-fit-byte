@@ -65,10 +65,10 @@ func loadConfig() (cfg ServerConfig, err error) {
 		conf.GetString("DB_PARAMS"),
 	)
 
-	conf.SetDefault("DB_MAX_OPEN_CONNS", 20)
+	conf.SetDefault("DB_MAX_OPEN_CONNS", 100)
 	cfg.dbMaxOpenConns = conf.GetInt("DB_MAX_OPEN_CONNS")
 
-	conf.SetDefault("DB_MAX_IDLE_CONNS", 10)
+	conf.SetDefault("DB_MAX_IDLE_CONNS", 20)
 	cfg.dbMaxIdleConns = conf.GetInt("DB_MAX_IDLE_CONNS")
 
 	conf.SetDefault("DB_MAX_CONN_LIFETIME_MS", 0)

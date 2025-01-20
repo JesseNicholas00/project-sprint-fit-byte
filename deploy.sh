@@ -17,11 +17,11 @@ DEST="/home/ubuntu/"
 
 # Servers to deploy to
 SERVERS=(
-  "10.0.6.144"
-  "10.0.3.175"
-  "10.0.7.171"
-  "10.0.1.22"
-  "10.0.6.5"
+  "10.0.22.213"
+  "10.0.16.243"
+  "10.0.20.14"
+  "10.0.20.184"
+  "10.0.23.233"
 )
 
 # Loop over servers and upload the files

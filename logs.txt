@@ -1,1 +1,0 @@
-./fit-byte.out: ./fit-byte.out: cannot execute binary file
