@@ -54,6 +54,10 @@ func (repo *activityRepositoryImpl) GetActivityByFilters(ctx context.Context, fi
 		)
 	}
 
+	conditions = append(conditions,
+		mewsql.WithCondition("user_id = ?", filter.UserID),
+	)
+
 	options := []mewsql.SelectOption{
 		mewsql.WithLimit(filter.Limit),
 		mewsql.WithOffset(filter.Offset),
@@ -61,7 +65,7 @@ func (repo *activityRepositoryImpl) GetActivityByFilters(ctx context.Context, fi
 	}
 
 	sql, args := mewsql.Select(
-		`activity_id, user_id, activity_type, done_at, calories_burned`,
+		`activity_id, user_id, activity_type, done_at, calories_burned, duration_in_minutes, created_at, updated_at`,
 		"activities",
 		options...,
 	)
