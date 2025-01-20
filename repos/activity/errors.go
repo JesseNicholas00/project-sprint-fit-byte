@@ -3,5 +3,5 @@ package activity
 import "errors"
 
 var (
-	ErrActivityIdNotFound = errors.New("activityService: activity id not found")
+	ErrActivityIdNotFound = errors.New("activityRepository: activity id not found")
 )

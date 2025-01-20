@@ -35,7 +35,7 @@ func (ctrl *activityController) updateActivity(ctx echo.Context) error {
 	// Update found activity
 	if err := ctrl.service.UpdateActivity(ctx.Request().Context(), req, &res, activityId, userId); err != nil {
 		switch {
-		case errors.Is(err, activity.ErrActivityNotFound):
+		case errors.Is(err, activity.ErrActivityIdNotFound):
 			return echo.NewHTTPError(http.StatusNotFound, echo.Map{
 				"message": "activity not found",
 			})
